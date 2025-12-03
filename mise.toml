@@ -1,0 +1,22 @@
+[tools]
+deno = "latest"
+
+[tasks.day]
+usage = '''
+arg "<day>" help="Specify the day to run (e.g., 01, 02, ..., 25)"
+arg "<part>" help="Specify the part to run (1 or 2)" default="1"
+'''
+run = '''
+padded=$(printf "%02d" ${usage_day})
+[ -f $padded/input.txt ] || (echo "ERROR: $padded/input.txt not found" && exit 1)
+deno run --allow-read $padded/p${usage_part}.ts
+'''
+
+[tasks.init]
+usage = '''
+arg "<day>" help="Specify the day to initialize (e.g., 01, 02, ..., 25)"
+'''
+run = '''
+padded=$(printf "%02d" ${usage_day})
+mkdir $padded && touch $padded/p1.ts $padded/p2.ts $padded/input.txt
+'''
